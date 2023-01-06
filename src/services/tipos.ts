@@ -54,6 +54,11 @@ export interface Cidade {
     descricao: string;
 }
 
+export interface Estado {
+    id: string;
+    descricao: string;
+}
+
 /* Navegação */
 
 interface Listagem {

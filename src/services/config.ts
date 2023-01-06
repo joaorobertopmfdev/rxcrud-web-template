@@ -52,6 +52,11 @@ export function montarMenus(token: string, administrador: boolean): Menu {
         link: '/cidade',
     });
 
+    item.subItens.push({
+        nome: 'Estado',
+        link: '/estado',
+    });
+
     menus.items.push(item);
 
     return menus;
