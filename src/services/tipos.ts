@@ -49,6 +49,11 @@ export interface Perfil {
     nome: string;
 }
 
+export interface Cidade {
+    id: string;
+    descricao: string;
+}
+
 /* Navegação */
 
 interface Listagem {
