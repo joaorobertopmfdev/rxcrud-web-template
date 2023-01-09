@@ -51,6 +51,7 @@ export interface Perfil {
 
 export interface Cidade {
     id: string;
+    idEstado: string;
     descricao: string;
 }
 

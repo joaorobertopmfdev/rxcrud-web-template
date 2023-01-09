@@ -10,7 +10,7 @@ export const SelectLabelAsyncPrimaryColor = '#FDA227';
 export const SelectLabelAsyncDisabledColor = '#CCCCCC';
 export const SelectLabelAsyncSecondaryColor = '#FFFFFF';
 
-export type DataType = 'DadosFixos' | 'Exemplo';
+export type DataType = 'DadosFixos' | 'Exemplo' | 'Estado';
 
 export const RequestTypeArray: RequestType[] = [
     {
@@ -21,6 +21,15 @@ export const RequestTypeArray: RequestType[] = [
         fieldValueLowerCase: 'fieldValueLowerCase',
         fieldLabelLowerCase: 'fieldLabelLowerCase',
         url: '/OData/Exemplo?$filter=contains(toupper(nome),toupper(\'selectedValue\'))',
+    },
+    {
+        useOdata: true,
+        fieldValue: 'Id',
+        type: 'Estado',
+        fieldLabel: 'Descricao',
+        fieldValueLowerCase: 'id',
+        fieldLabelLowerCase: 'descricao',
+        url: '/OData/Estado?$filter=contains(toupper(descricao),toupper(\'selectedValue\'))',
     },
 ];
 

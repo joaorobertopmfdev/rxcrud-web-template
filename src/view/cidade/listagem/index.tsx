@@ -40,7 +40,8 @@ function CidadeListagem(props: ListagemProps) {
     const configuracoesTabela: ConfiguracoesTabela = {
         mensagemPadrao: 'Não foram encontrados resultados para a consulta.',
         colunas: [
-            { nome: 'Descricão', campo: 'Descricao', tipo: 'string' },
+            { nome: 'Cidade', campo: 'Descricao', tipo: 'string' },
+            { nome: 'Estado', campo: 'Descricao', entidadePai: 'Estado', tipo: 'string' }            
         ],
     }
 
@@ -52,21 +53,21 @@ function CidadeListagem(props: ListagemProps) {
     const handleExclusao = handleExcluir;
 
     useEffect(() => {
-        if ((realizarConsulta)) {
-            setCarregando(true);
-            api.get(`/OData/Cidade?$count=true&$top=${quantidadeRegistrosPorPagina}&$skip=${quantidadeParaPular}`)
-                .then(response => {
-                    setTimeout(() => {
-                        setQuantidadeTotal(response.data['@odata.count']);
-                        setCidades(response.data.value);
-                        setRealizarConsulta(false);
-                        setCarregando(false);
-                    }, 250);
-                }).catch((error: AxiosError<ApiError>) => {
+        if (realizarConsulta) {
+            setCarregando(true);            
+            api.get(`/OData/Cidade?$expand=Estado`)
+            .then(response => {
+                setTimeout(() => {
+                    setQuantidadeTotal(response.data['@odata.count']);
+                    setCidades(response.data.value);
+                    setRealizarConsulta(false);
                     setCarregando(false);
-                    setMessageWarning(tratarErroApi(error, 'Não foi possível realizar a consulta: '));
-                    setShowWarning(true);
-                });
+                }, 250);
+            }).catch((error: AxiosError<ApiError>) => {
+                setCarregando(false);
+                setMessageWarning(tratarErroApi(error, 'Não foi possível realizar a consulta: '));
+                setShowWarning(true);
+            });
         }
     }, [quantidadeParaPular, realizarConsulta]);
 

@@ -11,6 +11,7 @@ import { ApiError, CadastroProps, Cidade } from '../../../services/tipos';
 import { RxlibLayout } from '../../../rxlib/componentes/layout/rxlib-Layout';
 import { ModalWarning } from '../../../rxlib/componentes/modal/modal-warning';
 import { ModalPrimary } from '../../../rxlib/componentes/modal/modal-primary';
+import { SelectLabelAsync } from '../../../rxlib/componentes/select/select-label-async';
 
 import {
     Breadcrumb,
@@ -30,7 +31,8 @@ function CidadeCadastro(props: CadastroProps) {
 
     const [cidade, setCidade] = useState<Cidade>({
         id: '',
-        descricao: '',
+        idEstado: '',
+        descricao: ''        
     });
 
     const { register, handleSubmit } = useForm<Cidade>();
@@ -54,11 +56,12 @@ function CidadeCadastro(props: CadastroProps) {
                 .then(response => {
                     setCidade({
                         id: response.data.id,
+                        idEstado: response.data.idEstado,
                         descricao: response.data.descricao,
                     });
                 }).catch((error: AxiosError<ApiError>) => {
                     tratarErro(error);
-                });
+            });
         }
     }, [props.match.params.id]);
 
@@ -142,6 +145,19 @@ function CidadeCadastro(props: CadastroProps) {
                                     placeholder='Descrição da cidade'
                                     referencia={register({ required: true })}
                                     readOnly={props.match.params.action === 'view'} />
+                            </div>
+                        </div>
+                        <div className='row px-1'>
+                            <div className='col-12 mt-1'>
+                                <SelectLabelAsync
+                                    foco='sim'
+                                    type='Estado'
+                                    name='idEstado'
+                                    label='Estado:'
+                                    id='inputIdEstado'
+                                    action={props.match.params.action}
+                                    referencia={register({ required: true })}
+                                    valorSelecionado={cidade.idEstado} />
                             </div>
                         </div>
                         <ButtonsCrud
